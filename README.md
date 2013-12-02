@@ -21,22 +21,21 @@ Or install it yourself as:
 ## Usage
 
 
-irb> require 'where_builder'       <br>
-=> true       <br>
-irb> f = WhereBuilder::WhereBuilder.new()       <br>
-=> #<WhereBuilder::WhereBuilder:0x007f80f0983258>       <br>
-irb> where = f.build(       <br>
-irb*   f.add('a.name = ?', 'zd'),        <br>
-irb*   f.OR('a.id=?', 1),        <br>
-irb*   f.AND,       <br>
-irb*   f.bracket(       <br>
-irb*       f.add('key like ?', 'zd'),        <br>
-irb*       f.AND('value=?', '2')       <br>
-irb>     )       <br>
-irb>   )       <br>
-=> ["WHERE a.name = ? OR a.id=? AND ( key like ? AND value=?)", ["zd", 1, "zd", "2"]]       <br>
-irb>        <br>
-irb* puts "where=#{where}"       <br>
+require 'where_builder'       <br>
+f = WhereBuilder::WhereBuilder.new()       <br>
+where = f.build(       <br>
+  f.add('a.name = ?', 'zd'),        <br>
+  f.OR('a.id=?', 1),        <br>
+  f.AND,       <br>
+  f.bracket(       <br>
+      f.add('key like ?', 'zd'),        <br>
+      f.AND('value=?', '2')       <br>
+    )       <br>
+  )       <br>
+
+puts "where=#{where}"       <br>
+
+output:
 where=["WHERE a.name = ? OR a.id=? AND ( key like ? AND value=?)", ["zd", 1, "zd", "2"]]       <br>
 => nil       <br>
 
