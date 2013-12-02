@@ -40,15 +40,15 @@ where=["WHERE a.name = ? OR a.id=? AND ( key like ? AND value=?)", ["zd", 1, "zd
 => nil       <br>
 
 ==============================
-irb> where = f.build(       <br>
-irb*   f.add('a.name = b.name'),        <br>
-irb*   f.OR('a.id=?', 1),        <br>
-irb*   f.AND,       <br>
-irb*   f.bracket(       <br>
-irb*       f.add('key like ?', 'zd'),        <br>
-irb*       f.AND('value=?', '2')       <br>
-irb>     )       <br>
-irb>   )       <br>
+where = f.build(       <br>
+  f.add('a.name = b.name'),        <br>
+  f.OR('a.id=?', 1),        <br>
+  f.AND,       <br>
+  f.bracket(       <br>
+      f.add('key like ?', 'zd'),        <br>
+      f.AND('value=?', '2')       <br>
+    )       <br>
+  )       <br>
 => ["WHERE a.name = b.name OR a.id=? AND ( key like ? AND value=?)", [1, "zd", "2"]]       <br>
 
 
