@@ -1,7 +1,8 @@
 
 # WhereBuilder
 
-TODO: Write a gem description
+  use this tool can build a where sentence for sql, it's can ignore a condition when it's para is nil or black string.
+  my purpose is not check nil for every condition, don't repeat so much if else.
 
 ## Installation
 
@@ -19,7 +20,38 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+
+irb> require 'where_builder'
+=> true
+irb> f = WhereBuilder::WhereBuilder.new()
+=> #<WhereBuilder::WhereBuilder:0x007f80f0983258>
+irb> where = f.build(
+irb*   f.add('a.name = ?', 'zd'), 
+irb*   f.OR('a.id=?', 1), 
+irb*   f.AND,
+irb*   f.bracket(
+irb*       f.add('key like ?', 'zd'), 
+irb*       f.AND('value=?', '2')
+irb>     )
+irb>   )
+=> ["WHERE a.name = ? OR a.id=? AND ( key like ? AND value=?)", ["zd", 1, "zd", "2"]]
+irb> 
+irb* puts "where=#{where}"
+where=["WHERE a.name = ? OR a.id=? AND ( key like ? AND value=?)", ["zd", 1, "zd", "2"]]
+=> nil
+
+==============================
+irb> where = f.build(
+irb*   f.add('a.name = b.name'), 
+irb*   f.OR('a.id=?', 1), 
+irb*   f.AND,
+irb*   f.bracket(
+irb*       f.add('key like ?', 'zd'), 
+irb*       f.AND('value=?', '2')
+irb>     )
+irb>   )
+=> ["WHERE a.name = b.name OR a.id=? AND ( key like ? AND value=?)", [1, "zd", "2"]]
+
 
 ## Contributing
 
